@@ -27083,36 +27083,314 @@
 
 	// Reference the high-level components
 	var Main = __webpack_require__(236);
+	var Search = __webpack_require__(238);
+	var Saved = __webpack_require__(240);
 
 	// Export the Routes
-	module.exports = React.createElement(Route, { path: '/', component: Main });
+	module.exports = React.createElement(
+		Route,
+		{ path: '/', component: Main },
+		React.createElement(Route, { path: 'Search', component: Search }),
+		React.createElement(Route, { path: 'Saved', component: Saved })
+	)
+
+	// import { hashHistory } from 'react-router'
+	// <Router history={hashHistory} />
+
+	;
 
 /***/ },
 /* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var styles = __webpack_require__(237);
+
+	var Main = React.createClass({
+		displayName: 'Main',
+
+
+		getInitialState: function getInitialState() {
+			return {
+				gitHubLink: "https://github.com/dsuare1/NYTReact",
+				linkedInLink: "https://www.linkedin.com/in/derricksuarez",
+				portfolioLink: "http://www.derricksuarez.com"
+			};
+		},
+
+		render: function render() {
+
+			return React.createElement(
+				'div',
+				null,
+				React.createElement(
+					'div',
+					{ className: 'jumbotron text-center', style: styles.jumbotron },
+					React.createElement(
+						'div',
+						{ className: 'container' },
+						React.createElement(
+							'h2',
+							{ className: 'main-header', style: styles.mainHeader },
+							'NYT Article Search'
+						)
+					)
+				),
+				React.createElement(
+					'div',
+					{ className: 'row text-center' },
+					React.createElement(
+						'a',
+						{ href: '#/Search' },
+						React.createElement(
+							'button',
+							{ className: 'btn btn-lg btn-default main-button', id: 'articleSearch', style: styles.button },
+							'Search for Articles'
+						)
+					),
+					React.createElement(
+						'a',
+						{ href: '#/Saved' },
+						React.createElement(
+							'button',
+							{ className: 'btn btn-lg btn-default main-button', id: 'viewSaved', style: styles.button },
+							'View Saved Articles'
+						)
+					)
+				),
+				React.createElement(
+					'div',
+					null,
+					this.props.children
+				),
+				React.createElement('br', null),
+				React.createElement(
+					'footer',
+					{ className: 'footer', style: styles.footer },
+					React.createElement(
+						'div',
+						{ className: 'container' },
+						React.createElement(
+							'p',
+							{ style: styles.footerText },
+							'© Derrick Suarez 2016'
+						),
+						React.createElement(
+							'p',
+							{ style: styles.footerText, className: 'hover' },
+							React.createElement(
+								'a',
+								{ href: this.state.gitHubLink, style: styles.links },
+								'GitHub'
+							)
+						),
+						React.createElement(
+							'p',
+							{ style: styles.footerText, className: 'hover' },
+							React.createElement(
+								'a',
+								{ href: this.state.linkedInLink, style: styles.links },
+								'LinkedIn'
+							)
+						),
+						React.createElement(
+							'p',
+							{ style: styles.footerText, className: 'hover' },
+							React.createElement(
+								'a',
+								{ href: this.state.portfolioLink },
+								'Portfolio'
+							)
+						)
+					)
+				)
+			);
+		}
+	});
+
+	module.exports = Main;
+
+/***/ },
+/* 237 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var Styles = {
+	    jumbotron: {
+	        backgroundColor: '#161e27',
+	        color: '#ecf0f1'
+	    },
+	    mainHeader: {
+	        fontWeight: 100,
+	        fontSize: '4.5em'
+	    },
+	    button: {
+	        fontWeight: 300,
+	        marginLeft: 5,
+	        marginRight: 5
+	    },
+	    footer: {
+	        position: 'absolute',
+	        bottom: 0,
+	        width: '100%',
+	        backgroundColor: '#161e27',
+	        color: '#ecf0f1',
+	        fontWeight: 100,
+	        fontSize: '1em',
+	        padding: 20
+	    },
+	    footerText: {
+	        display: 'inline-block',
+	        marginRight: 15
+	    }
+	};
+
+	module.exports = Styles;
+
+/***/ },
+/* 238 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
 
 	// Include React 
 	var React = __webpack_require__(1);
 
-	var Main = React.createClass({
-		displayName: "Main",
+	var styles = __webpack_require__(239);
+
+	var Search = React.createClass({
+		displayName: 'Search',
 
 
 		// Here we render the function
 		render: function render() {
 
 			return React.createElement(
-				"div",
-				{ className: "jumbotron text-center" },
+				'div',
+				{ className: 'container' },
 				React.createElement(
-					"div",
-					{ className: "container" },
+					'div',
+					{ className: 'row' },
 					React.createElement(
-						"h2",
-						null,
-						"NYT Article Search"
+						'div',
+						{ className: 'col-md-4' },
+						React.createElement('br', null),
+						React.createElement(
+							'div',
+							{ className: 'panel panel-default', style: styles.panel },
+							React.createElement(
+								'div',
+								{ className: 'panel-heading', style: styles.panelHeading },
+								React.createElement(
+									'h3',
+									{ className: 'panel-title' },
+									React.createElement('i', { className: 'fa fa-list-alt' }),
+									'   Search Parameters'
+								)
+							),
+							React.createElement(
+								'div',
+								{ className: 'panel-body' },
+								React.createElement(
+									'form',
+									{ role: 'form', method: 'GET', action: '/search' },
+									React.createElement(
+										'div',
+										{ className: 'form-group' },
+										React.createElement(
+											'label',
+											{ htmlFor: 'search' },
+											'Search Term:'
+										),
+										React.createElement('input', { type: 'text', name: 'search', className: 'form-control', id: 'searchTerm' })
+									),
+									React.createElement(
+										'div',
+										{ className: 'form-group' },
+										React.createElement(
+											'label',
+											{ htmlFor: 'num-articles' },
+											'Number of Records to Retrieve:'
+										),
+										React.createElement(
+											'select',
+											{ className: 'form-control', name: 'num-articles', defaultValue: 5, id: 'numRecordsSelect' },
+											React.createElement(
+												'option',
+												{ value: 1 },
+												'1'
+											),
+											React.createElement(
+												'option',
+												{ value: 5 },
+												'5'
+											),
+											React.createElement(
+												'option',
+												{ value: 10 },
+												'10'
+											)
+										)
+									),
+									React.createElement(
+										'div',
+										{ className: 'form-group' },
+										React.createElement(
+											'label',
+											{ htmlFor: 'startYear' },
+											'Start Year (Optional):'
+										),
+										React.createElement('input', { type: 'text', name: 'startYear', className: 'form-control', id: 'startYear' })
+									),
+									React.createElement(
+										'div',
+										{ className: 'form-group' },
+										React.createElement(
+											'label',
+											{ htmlFor: 'endYear' },
+											'End Year (Optional):'
+										),
+										React.createElement('input', { type: 'text', name: 'endYear', className: 'form-control', id: 'endYear' })
+									),
+									React.createElement(
+										'button',
+										{ type: 'submit', className: 'btn btn-default', id: 'runSearch' },
+										React.createElement('i', { className: 'fa fa-search' }),
+										' Search'
+									),
+									React.createElement(
+										'button',
+										{ type: 'button', className: 'btn btn-default', id: 'clearAll', style: styles.clearButton },
+										React.createElement('i', { className: 'fa fa-trash' }),
+										' Clear Fields'
+									)
+								)
+							)
+						)
+					),
+					React.createElement(
+						'div',
+						{ className: 'col-md-8' },
+						React.createElement('br', null),
+						React.createElement(
+							'div',
+							{ className: 'panel panel-default', style: styles.panel },
+							React.createElement(
+								'div',
+								{ className: 'panel-heading', style: styles.panelHeading },
+								React.createElement(
+									'h3',
+									{ className: 'panel-title' },
+									React.createElement('i', { className: 'fa fa-list-alt' }),
+									'   Search Results'
+								)
+							),
+							React.createElement('div', { className: 'panel-body' })
+						)
 					)
 				)
 			);
@@ -27120,7 +27398,97 @@
 	});
 
 	// Export the componen back for use in other files
-	module.exports = Main;
+	module.exports = Search;
+
+/***/ },
+/* 239 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var Styles = {
+	    panel: {
+	        color: '#161e27',
+	        fontWeight: 100
+	    },
+	    panelHeading: {
+	        backgroundColor: '#161e27',
+	        color: '#ecf0f1'
+	    },
+	    clearButton: {
+	        float: 'right'
+	    }
+
+	};
+
+	module.exports = Styles;
+
+/***/ },
+/* 240 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	// Include React 
+	var React = __webpack_require__(1);
+
+	var styles = __webpack_require__(241);
+
+	var Saved = React.createClass({
+		displayName: 'Saved',
+
+
+		// Here we render the function
+		render: function render() {
+
+			return React.createElement(
+				'div',
+				{ className: 'row' },
+				React.createElement(
+					'div',
+					{ className: 'col-md-8 col-md-offset-2' },
+					React.createElement('br', null),
+					React.createElement(
+						'div',
+						{ className: 'panel panel-default', style: styles.panel },
+						React.createElement(
+							'div',
+							{ className: 'panel-heading', style: styles.panelHeading },
+							React.createElement(
+								'h4',
+								{ className: 'panel-title' },
+								'Saved'
+							)
+						),
+						React.createElement('div', { className: 'panel-body' })
+					)
+				)
+			);
+		}
+	});
+
+	// Export the componen back for use in other files
+	module.exports = Saved;
+
+/***/ },
+/* 241 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var Styles = {
+	    panel: {
+	        color: '#161e27',
+	        fontWeight: 100
+	    },
+	    panelHeading: {
+	        backgroundColor: '#161e27',
+	        color: '#ecf0f1'
+	    }
+
+	};
+
+	module.exports = Styles;
 
 /***/ }
 /******/ ]);
