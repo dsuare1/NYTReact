@@ -27266,7 +27266,19 @@
 		displayName: 'Search',
 
 
-		// Here we render the function
+		getInitialState: function getInitialState() {
+			return {
+				searchTerm: "",
+				results: ""
+			};
+		},
+
+		handleChange: function handleChange(event) {
+			var newState = {};
+			newState[event.target.id] = event.target.value;
+			this.setState(newState);
+		},
+
 		render: function render() {
 
 			return React.createElement(
@@ -27288,8 +27300,7 @@
 								React.createElement(
 									'h3',
 									{ className: 'panel-title' },
-									React.createElement('i', { className: 'fa fa-list-alt' }),
-									'   Search Parameters'
+									'Search Parameters'
 								)
 							),
 							React.createElement(
@@ -27306,7 +27317,7 @@
 											{ htmlFor: 'search' },
 											'Search Term:'
 										),
-										React.createElement('input', { type: 'text', name: 'search', className: 'form-control', id: 'searchTerm' })
+										React.createElement('input', { type: 'text', name: 'search', value: this.state.value, className: 'form-control', id: 'searchTerm', onChange: this.handleChange })
 									),
 									React.createElement(
 										'div',
@@ -27359,8 +27370,7 @@
 									React.createElement(
 										'button',
 										{ type: 'submit', className: 'btn btn-default', id: 'runSearch' },
-										React.createElement('i', { className: 'fa fa-search' }),
-										' Search'
+										'Search'
 									),
 									React.createElement(
 										'button',
@@ -27385,8 +27395,12 @@
 								React.createElement(
 									'h3',
 									{ className: 'panel-title' },
-									React.createElement('i', { className: 'fa fa-list-alt' }),
-									'   Search Results'
+									'Search Results for:        ',
+									React.createElement(
+										'span',
+										{ style: styles.liveTerm },
+										this.state.searchTerm
+									)
 								)
 							),
 							React.createElement('div', { className: 'panel-body' })
@@ -27417,8 +27431,10 @@
 	    },
 	    clearButton: {
 	        float: 'right'
+	    },
+	    liveTerm: {
+	        color: '#2ecc71'
 	    }
-
 	};
 
 	module.exports = Styles;

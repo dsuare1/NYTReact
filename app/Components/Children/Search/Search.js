@@ -5,8 +5,20 @@ var styles = require('./style.js');
 
 var Search = React.createClass({
 
-	// Here we render the function
-	render: function(){
+	getInitialState: function() {
+		return {
+			searchTerm: "",
+			results: ""
+		}
+	},
+
+	handleChange: function(event) {
+		var newState = {};
+		newState[event.target.id] = event.target.value;
+		this.setState(newState);
+	},
+
+	render: function() {
 
 		return(
 
@@ -16,7 +28,7 @@ var Search = React.createClass({
 					<br />
 						<div className="panel panel-default" style={styles.panel}>
 							<div className="panel-heading" style={styles.panelHeading}>
-								<h3 className="panel-title"><i className="fa fa-list-alt"></i>   Search Parameters</h3>
+								<h3 className="panel-title">Search Parameters</h3>
 							</div>
 							<div className="panel-body">
 
@@ -24,7 +36,7 @@ var Search = React.createClass({
 
 								  <div className="form-group">
 								    <label htmlFor="search">Search Term:</label>
-								    <input type="text" name="search" className="form-control" id="searchTerm" />
+								    <input type="text" name="search" value={this.state.value} className="form-control" id="searchTerm" onChange={this.handleChange}/>
 								  </div>
 
 								  <div className="form-group">
@@ -46,7 +58,7 @@ var Search = React.createClass({
 								    <input type="text" name="endYear" className="form-control" id="endYear" />
 								  </div>
 
-								  <button type="submit" className="btn btn-default" id="runSearch"><i className="fa fa-search"></i> Search</button>
+								  <button type="submit" className="btn btn-default" id="runSearch">Search</button>
 			  					  <button type="button" className="btn btn-default" id="clearAll" style={styles.clearButton}><i className="fa fa-trash"></i> Clear Fields</button>
 
 								</form>
@@ -57,7 +69,7 @@ var Search = React.createClass({
 						<br />
 						<div className="panel panel-default" style={styles.panel}>
 							<div className="panel-heading" style={styles.panelHeading}>
-								<h3 className="panel-title"><i className="fa fa-list-alt"></i>   Search Results</h3>
+								<h3 className="panel-title">Search Results for:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style={styles.liveTerm}>{this.state.searchTerm}</span></h3>
 							</div>
 							<div className="panel-body">
 							</div>

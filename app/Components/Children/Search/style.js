@@ -9,8 +9,10 @@ var Styles= {
     },
     clearButton: {
     	float: 'right'
+    },
+    liveTerm: {
+    	color: '#2ecc71'
     }
-    
 }
 
 module.exports = Styles;

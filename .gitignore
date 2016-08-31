@@ -38,3 +38,6 @@ jspm_packages
 
 # mockup image file
 mockup.png
+
+# NYT API Key
+NYT_key.txt
