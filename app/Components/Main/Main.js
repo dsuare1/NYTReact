@@ -13,7 +13,7 @@ var Main = React.createClass({
 	getInitialState: function() {
 		return {
 			searchTerm: "",
-			results: ""
+			results: "",
 		}
 	},
 
@@ -24,17 +24,19 @@ var Main = React.createClass({
 	},
 
 	componentDidUpdate: function(prevProps, prevState){
-		console.log('foo: ' + this.state.searchTerm);
 		if (prevState.searchTerm != this.state.searchTerm) {
 			console.log('the state of the "Main" component just updated by clicking the submit button; the value of the input is now the value on this coponent\'s "searchTerm" state ');
 			console.log('"Main"\'s search term: ' + this.state.searchTerm);
 			helpers.runSearch(this.state.searchTerm)
 				.then(function(data) {
-					console.log(data);
-					// this.setState({
-					// 	results: data
-					// })
-				})
+					var results = [];
+					for (var i = 0; i < data.length; i++) {
+						results.push(data[i]);
+					};
+					this.setState({
+						results: results,
+					})
+				}.bind(this))
 		}
 	},
 

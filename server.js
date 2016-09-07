@@ -50,19 +50,19 @@ app.get('/', function(req, res){
 //     })
 // });
 
-// app.post('/api/saved', function(req, res){
-//   var newSearch = new History(req.body);
-//   console.log("BODY: " + req.body.location);
+app.post('/api/saved', function(req, res){
+  var newSearch = new History(req.body);
+  console.log("BODY: " + req.body.location);
 
-//   History.create({"location": req.body.location, "date": Date.now()}, function(err){
-//     if(err){
-//       console.log(err);
-//     }
-//     else {
-//       res.send("Saved Search");
-//     }
-//   })
-// });
+  History.create({"location": req.body.location, "date": Date.now()}, function(err){
+    if(err){
+      console.log(err);
+    }
+    else {
+      res.send("Saved Search");
+    }
+  })
+});
 
 // app.delete('/api/saved', function(req, res) {
 

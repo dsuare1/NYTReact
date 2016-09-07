@@ -13,6 +13,9 @@ var Styles= {
     buttonHover: {
         boxShadow: "0 0 20px #2ecc71",
         backgroundColor: "#2ecc71"
+    },
+    searchTerm: {
+        fontWeight: 300
     }
     
 }

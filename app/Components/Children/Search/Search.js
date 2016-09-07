@@ -41,7 +41,7 @@ var Search = React.createClass({
 
 								  <div className="form-group">
 								    <label htmlFor="search">Search Term:</label>
-								    <input type="text" name="search" value={this.state.value} className="form-control" id="searchTerm" onChange={this.handleChange}/>
+								    <input type="text" name="search" value={this.state.value} className="form-control" id="searchTerm" style={styles.searchTerm} onChange={this.handleChange}/>
 								  </div>
 
 								  {/*<div className="form-group">

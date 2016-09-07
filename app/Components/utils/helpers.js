@@ -11,7 +11,7 @@ var helpers = {
 		console.log(queryURL);
 		return axios.get(queryURL)
 			.then(function(response) {
-				console.log(response);
+				return response.data.response.docs;
 			})
 	}
 }
