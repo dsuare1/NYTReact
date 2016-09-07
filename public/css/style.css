@@ -2,6 +2,11 @@
 	cursor: pointer;
 }
 
+.main-button {
+	background-color: #2ecc71;
+}
+
 .main-button:hover {
-	box-shadow: 0 0 20px #161e27;
+	box-shadow: 0 0 20px #2ecc71;
+	background-color: #2ecc71;
 }

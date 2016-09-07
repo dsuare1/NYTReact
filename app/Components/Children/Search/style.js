@@ -10,9 +10,11 @@ var Styles= {
     clearButton: {
     	float: 'right'
     },
-    liveTerm: {
-    	color: '#2ecc71'
+    buttonHover: {
+        boxShadow: "0 0 20px #2ecc71",
+        backgroundColor: "#2ecc71"
     }
+    
 }
 
 module.exports = Styles;
