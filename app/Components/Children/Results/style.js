@@ -13,6 +13,13 @@ var Styles= {
     	marginBottom: 10,
     	fontWeight: 300,
     	fontSize: '1.2em'
+    },
+    saveButton: {
+    	position: 'absolute',
+    	right: 40
+    },
+    hr: {
+    	marginTop: 50
     }
 }
 

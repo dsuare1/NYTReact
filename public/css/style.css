@@ -10,3 +10,10 @@
 	box-shadow: 0 0 20px #2ecc71;
 	background-color: #2ecc71;
 }
+
+.main-button:link,
+.main-button:visited,
+.main-button:focus,
+.main-button:active {
+	background-color: #2ecc71;	
+}

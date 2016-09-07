@@ -21433,9 +21433,9 @@
 
 	var Search = __webpack_require__(174);
 	var Results = __webpack_require__(176);
-	var Saved = __webpack_require__(177);
+	var Saved = __webpack_require__(178);
 
-	var helpers = __webpack_require__(179);
+	var helpers = __webpack_require__(180);
 
 	var Main = React.createClass({
 		displayName: 'Main',
@@ -21678,7 +21678,7 @@
 
 	var React = __webpack_require__(1);
 
-	var styles = __webpack_require__(202);
+	var styles = __webpack_require__(177);
 
 	var Results = React.createClass({
 		displayName: 'Results',
@@ -21701,7 +21701,18 @@
 							'a',
 							{ href: item.web_url },
 							item.web_url
-						)
+						),
+						React.createElement(
+							'form',
+							{ action: '/api/saved', method: 'POST' },
+							React.createElement('input', { type: 'hidden', name: 'save-article' }),
+							React.createElement(
+								'button',
+								{ className: 'btn main-button save-button', type: 'submit', style: styles.saveButton },
+								'Save Article'
+							)
+						),
+						React.createElement('hr', { style: styles.hr })
 					);
 				});
 			}
@@ -21732,13 +21743,46 @@
 
 /***/ },
 /* 177 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var Styles = {
+	    panel: {
+	        color: '#161e27',
+	        fontWeight: 100
+	    },
+	    panelHeading: {
+	        backgroundColor: '#161e27',
+	        color: '#ecf0f1'
+	    },
+	    li: {
+	        listStyleType: 'none',
+	        padding: 10,
+	        marginBottom: 10,
+	        fontWeight: 300,
+	        fontSize: '1.2em'
+	    },
+	    saveButton: {
+	        position: 'absolute',
+	        right: 40
+	    },
+	    hr: {
+	        marginTop: 50
+	    }
+	};
+
+	module.exports = Styles;
+
+/***/ },
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
 
-	var styles = __webpack_require__(178);
+	var styles = __webpack_require__(179);
 
 	var Saved = React.createClass({
 		displayName: 'Saved',
@@ -21768,7 +21812,7 @@
 	module.exports = Saved;
 
 /***/ },
-/* 178 */
+/* 179 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -21787,12 +21831,12 @@
 	module.exports = Styles;
 
 /***/ },
-/* 179 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var axios = __webpack_require__(180);
+	var axios = __webpack_require__(181);
 
 	var nytKey = "7ea8e56808f84197b3a70e18412abf37";
 
@@ -21812,20 +21856,20 @@
 	module.exports = helpers;
 
 /***/ },
-/* 180 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(181);
+	module.exports = __webpack_require__(182);
 
 /***/ },
-/* 181 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(182);
-	var bind = __webpack_require__(183);
-	var Axios = __webpack_require__(184);
+	var utils = __webpack_require__(183);
+	var bind = __webpack_require__(184);
+	var Axios = __webpack_require__(185);
 
 	/**
 	 * Create an instance of Axios
@@ -21861,7 +21905,7 @@
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(201);
+	axios.spread = __webpack_require__(202);
 
 	module.exports = axios;
 
@@ -21870,12 +21914,12 @@
 
 
 /***/ },
-/* 182 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var bind = __webpack_require__(183);
+	var bind = __webpack_require__(184);
 
 	/*global toString:true*/
 
@@ -22175,7 +22219,7 @@
 
 
 /***/ },
-/* 183 */
+/* 184 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22192,17 +22236,17 @@
 
 
 /***/ },
-/* 184 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var defaults = __webpack_require__(185);
-	var utils = __webpack_require__(182);
-	var InterceptorManager = __webpack_require__(187);
-	var dispatchRequest = __webpack_require__(188);
-	var isAbsoluteURL = __webpack_require__(199);
-	var combineURLs = __webpack_require__(200);
+	var defaults = __webpack_require__(186);
+	var utils = __webpack_require__(183);
+	var InterceptorManager = __webpack_require__(188);
+	var dispatchRequest = __webpack_require__(189);
+	var isAbsoluteURL = __webpack_require__(200);
+	var combineURLs = __webpack_require__(201);
 
 	/**
 	 * Create a new instance of Axios
@@ -22283,13 +22327,13 @@
 
 
 /***/ },
-/* 185 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(182);
-	var normalizeHeaderName = __webpack_require__(186);
+	var utils = __webpack_require__(183);
+	var normalizeHeaderName = __webpack_require__(187);
 
 	var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 	var DEFAULT_CONTENT_TYPE = {
@@ -22361,12 +22405,12 @@
 
 
 /***/ },
-/* 186 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(182);
+	var utils = __webpack_require__(183);
 
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -22379,12 +22423,12 @@
 
 
 /***/ },
-/* 187 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(182);
+	var utils = __webpack_require__(183);
 
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -22437,13 +22481,13 @@
 
 
 /***/ },
-/* 188 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-	var utils = __webpack_require__(182);
-	var transformData = __webpack_require__(189);
+	var utils = __webpack_require__(183);
+	var transformData = __webpack_require__(190);
 
 	/**
 	 * Dispatch a request to the server using whichever adapter
@@ -22484,10 +22528,10 @@
 	    adapter = config.adapter;
 	  } else if (typeof XMLHttpRequest !== 'undefined') {
 	    // For browsers use XHR adapter
-	    adapter = __webpack_require__(190);
+	    adapter = __webpack_require__(191);
 	  } else if (typeof process !== 'undefined') {
 	    // For node use HTTP adapter
-	    adapter = __webpack_require__(190);
+	    adapter = __webpack_require__(191);
 	  }
 
 	  return Promise.resolve(config)
@@ -22519,12 +22563,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 189 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(182);
+	var utils = __webpack_require__(183);
 
 	/**
 	 * Transform the data for a request or a response
@@ -22545,18 +22589,18 @@
 
 
 /***/ },
-/* 190 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-	var utils = __webpack_require__(182);
-	var settle = __webpack_require__(191);
-	var buildURL = __webpack_require__(194);
-	var parseHeaders = __webpack_require__(195);
-	var isURLSameOrigin = __webpack_require__(196);
-	var createError = __webpack_require__(192);
-	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(197);
+	var utils = __webpack_require__(183);
+	var settle = __webpack_require__(192);
+	var buildURL = __webpack_require__(195);
+	var parseHeaders = __webpack_require__(196);
+	var isURLSameOrigin = __webpack_require__(197);
+	var createError = __webpack_require__(193);
+	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(198);
 
 	module.exports = function xhrAdapter(config) {
 	  return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -22650,7 +22694,7 @@
 	    // This is only done if running in a standard browser environment.
 	    // Specifically not if we're in a web worker, or react-native.
 	    if (utils.isStandardBrowserEnv()) {
-	      var cookies = __webpack_require__(198);
+	      var cookies = __webpack_require__(199);
 
 	      // Add xsrf header
 	      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -22714,12 +22758,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 191 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var createError = __webpack_require__(192);
+	var createError = __webpack_require__(193);
 
 	/**
 	 * Resolve or reject a Promise based on response status.
@@ -22745,12 +22789,12 @@
 
 
 /***/ },
-/* 192 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var enhanceError = __webpack_require__(193);
+	var enhanceError = __webpack_require__(194);
 
 	/**
 	 * Create an Error with the specified message, config, error code, and response.
@@ -22768,7 +22812,7 @@
 
 
 /***/ },
-/* 193 */
+/* 194 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22793,12 +22837,12 @@
 
 
 /***/ },
-/* 194 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(182);
+	var utils = __webpack_require__(183);
 
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -22867,12 +22911,12 @@
 
 
 /***/ },
-/* 195 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(182);
+	var utils = __webpack_require__(183);
 
 	/**
 	 * Parse headers into an object
@@ -22910,12 +22954,12 @@
 
 
 /***/ },
-/* 196 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(182);
+	var utils = __webpack_require__(183);
 
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -22984,7 +23028,7 @@
 
 
 /***/ },
-/* 197 */
+/* 198 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23026,12 +23070,12 @@
 
 
 /***/ },
-/* 198 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(182);
+	var utils = __webpack_require__(183);
 
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -23085,7 +23129,7 @@
 
 
 /***/ },
-/* 199 */
+/* 200 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23105,7 +23149,7 @@
 
 
 /***/ },
-/* 200 */
+/* 201 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23123,7 +23167,7 @@
 
 
 /***/ },
-/* 201 */
+/* 202 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23154,32 +23198,6 @@
 	  };
 	};
 
-
-/***/ },
-/* 202 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	var Styles = {
-	    panel: {
-	        color: '#161e27',
-	        fontWeight: 100
-	    },
-	    panelHeading: {
-	        backgroundColor: '#161e27',
-	        color: '#ecf0f1'
-	    },
-	    li: {
-	        listStyleType: 'none',
-	        padding: 10,
-	        marginBottom: 10,
-	        fontWeight: 300,
-	        fontSize: '1.2em'
-	    }
-	};
-
-	module.exports = Styles;
 
 /***/ }
 /******/ ]);
