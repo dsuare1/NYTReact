@@ -13,6 +13,23 @@ var helpers = {
 			.then(function(response) {
 				return response.data.response.docs;
 			})
+	},
+
+	postArticle: function(article) {
+		console.log(article);
+		return axios.post('/api/save', {article: article})
+			.then(function(data) {
+				console.log('data from helpers postArticle function' + data);
+				return data;
+			})
+	},
+
+	getSaved: function() {
+		return axios.get('/api/saved')
+			.then(function(response) {
+				console.log('response of getSaved helper function: ' + response);
+				return response;
+			})
 	}
 }
 

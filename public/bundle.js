@@ -21433,9 +21433,9 @@
 
 	var Search = __webpack_require__(174);
 	var Results = __webpack_require__(176);
-	var Saved = __webpack_require__(178);
+	var Saved = __webpack_require__(201);
 
-	var helpers = __webpack_require__(180);
+	var helpers = __webpack_require__(178);
 
 	var Main = React.createClass({
 		displayName: 'Main',
@@ -21444,7 +21444,8 @@
 		getInitialState: function getInitialState() {
 			return {
 				searchTerm: "",
-				results: ""
+				results: "",
+				saved: []
 			};
 		},
 
@@ -21468,6 +21469,14 @@
 					});
 				}.bind(this));
 			}
+		},
+
+		componentDidMount: function componentDidMount() {
+			helpers.getSaved().then(function (response) {
+				this.setState({
+					history: response
+				});
+			});
 		},
 
 		render: function render() {
@@ -21511,7 +21520,7 @@
 						React.createElement(
 							'div',
 							{ className: 'col-md-8 col-md-offset-2' },
-							React.createElement(Saved, null)
+							React.createElement(Saved, { saved: this.state.saved })
 						)
 					)
 				)
@@ -21623,7 +21632,7 @@
 					),
 					React.createElement(
 						'button',
-						{ className: 'btn btn-default main-button', id: 'runSearch', onClick: this.handleClick },
+						{ className: 'btn btn-default main-button', onClick: this.handleClick },
 						'Search'
 					),
 					React.createElement(
@@ -21680,11 +21689,12 @@
 
 	var styles = __webpack_require__(177);
 
+	var helpers = __webpack_require__(178);
+
 	var Results = React.createClass({
 		displayName: 'Results',
 
 
-		// Here we render the function
 		render: function render() {
 
 			var myResults = null;
@@ -21704,8 +21714,9 @@
 						),
 						React.createElement(
 							'form',
-							{ action: '/api/saved', method: 'POST' },
-							React.createElement('input', { type: 'hidden', name: 'save-article' }),
+							{ action: '/api/save', method: 'POST' },
+							React.createElement('input', { type: 'hidden', name: 'title', value: item.snippet }),
+							React.createElement('input', { type: 'hidden', name: 'url', value: item.web_url }),
 							React.createElement(
 								'button',
 								{ className: 'btn main-button save-button', type: 'submit', style: styles.saveButton },
@@ -21780,63 +21791,7 @@
 
 	'use strict';
 
-	var React = __webpack_require__(1);
-
-	var styles = __webpack_require__(179);
-
-	var Saved = React.createClass({
-		displayName: 'Saved',
-
-
-		// Here we render the function
-		render: function render() {
-
-			return React.createElement(
-				'div',
-				{ className: 'panel panel-default', style: styles.panel },
-				React.createElement(
-					'div',
-					{ className: 'panel-heading', style: styles.panelHeading },
-					React.createElement(
-						'h4',
-						{ className: 'panel-title' },
-						'Saved'
-					)
-				),
-				React.createElement('div', { className: 'panel-body' })
-			);
-		}
-	});
-
-	// Export the componen back for use in other files
-	module.exports = Saved;
-
-/***/ },
-/* 179 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	var Styles = {
-	    panel: {
-	        color: '#161e27',
-	        fontWeight: 100
-	    },
-	    panelHeading: {
-	        backgroundColor: '#161e27',
-	        color: '#ecf0f1'
-	    }
-	};
-
-	module.exports = Styles;
-
-/***/ },
-/* 180 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var axios = __webpack_require__(181);
+	var axios = __webpack_require__(179);
 
 	var nytKey = "7ea8e56808f84197b3a70e18412abf37";
 
@@ -21850,26 +21805,41 @@
 			return axios.get(queryURL).then(function (response) {
 				return response.data.response.docs;
 			});
+		},
+
+		postArticle: function postArticle(article) {
+			console.log(article);
+			return axios.post('/api/save', { article: article }).then(function (data) {
+				console.log('data from helpers postArticle function' + data);
+				return data;
+			});
+		},
+
+		getSaved: function getSaved() {
+			return axios.get('/api/saved').then(function (response) {
+				console.log('response of getSaved helper function: ' + response);
+				return response;
+			});
 		}
 	};
 
 	module.exports = helpers;
 
 /***/ },
-/* 181 */
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(182);
+	module.exports = __webpack_require__(180);
 
 /***/ },
-/* 182 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(183);
-	var bind = __webpack_require__(184);
-	var Axios = __webpack_require__(185);
+	var utils = __webpack_require__(181);
+	var bind = __webpack_require__(182);
+	var Axios = __webpack_require__(183);
 
 	/**
 	 * Create an instance of Axios
@@ -21905,7 +21875,7 @@
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(202);
+	axios.spread = __webpack_require__(200);
 
 	module.exports = axios;
 
@@ -21914,12 +21884,12 @@
 
 
 /***/ },
-/* 183 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var bind = __webpack_require__(184);
+	var bind = __webpack_require__(182);
 
 	/*global toString:true*/
 
@@ -22219,7 +22189,7 @@
 
 
 /***/ },
-/* 184 */
+/* 182 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22236,17 +22206,17 @@
 
 
 /***/ },
-/* 185 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var defaults = __webpack_require__(186);
-	var utils = __webpack_require__(183);
-	var InterceptorManager = __webpack_require__(188);
-	var dispatchRequest = __webpack_require__(189);
-	var isAbsoluteURL = __webpack_require__(200);
-	var combineURLs = __webpack_require__(201);
+	var defaults = __webpack_require__(184);
+	var utils = __webpack_require__(181);
+	var InterceptorManager = __webpack_require__(186);
+	var dispatchRequest = __webpack_require__(187);
+	var isAbsoluteURL = __webpack_require__(198);
+	var combineURLs = __webpack_require__(199);
 
 	/**
 	 * Create a new instance of Axios
@@ -22327,13 +22297,13 @@
 
 
 /***/ },
-/* 186 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(183);
-	var normalizeHeaderName = __webpack_require__(187);
+	var utils = __webpack_require__(181);
+	var normalizeHeaderName = __webpack_require__(185);
 
 	var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 	var DEFAULT_CONTENT_TYPE = {
@@ -22405,12 +22375,12 @@
 
 
 /***/ },
-/* 187 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(183);
+	var utils = __webpack_require__(181);
 
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -22423,12 +22393,12 @@
 
 
 /***/ },
-/* 188 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(183);
+	var utils = __webpack_require__(181);
 
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -22481,13 +22451,13 @@
 
 
 /***/ },
-/* 189 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-	var utils = __webpack_require__(183);
-	var transformData = __webpack_require__(190);
+	var utils = __webpack_require__(181);
+	var transformData = __webpack_require__(188);
 
 	/**
 	 * Dispatch a request to the server using whichever adapter
@@ -22528,10 +22498,10 @@
 	    adapter = config.adapter;
 	  } else if (typeof XMLHttpRequest !== 'undefined') {
 	    // For browsers use XHR adapter
-	    adapter = __webpack_require__(191);
+	    adapter = __webpack_require__(189);
 	  } else if (typeof process !== 'undefined') {
 	    // For node use HTTP adapter
-	    adapter = __webpack_require__(191);
+	    adapter = __webpack_require__(189);
 	  }
 
 	  return Promise.resolve(config)
@@ -22563,12 +22533,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 190 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(183);
+	var utils = __webpack_require__(181);
 
 	/**
 	 * Transform the data for a request or a response
@@ -22589,18 +22559,18 @@
 
 
 /***/ },
-/* 191 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-	var utils = __webpack_require__(183);
-	var settle = __webpack_require__(192);
-	var buildURL = __webpack_require__(195);
-	var parseHeaders = __webpack_require__(196);
-	var isURLSameOrigin = __webpack_require__(197);
-	var createError = __webpack_require__(193);
-	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(198);
+	var utils = __webpack_require__(181);
+	var settle = __webpack_require__(190);
+	var buildURL = __webpack_require__(193);
+	var parseHeaders = __webpack_require__(194);
+	var isURLSameOrigin = __webpack_require__(195);
+	var createError = __webpack_require__(191);
+	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(196);
 
 	module.exports = function xhrAdapter(config) {
 	  return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -22694,7 +22664,7 @@
 	    // This is only done if running in a standard browser environment.
 	    // Specifically not if we're in a web worker, or react-native.
 	    if (utils.isStandardBrowserEnv()) {
-	      var cookies = __webpack_require__(199);
+	      var cookies = __webpack_require__(197);
 
 	      // Add xsrf header
 	      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -22758,12 +22728,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 192 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var createError = __webpack_require__(193);
+	var createError = __webpack_require__(191);
 
 	/**
 	 * Resolve or reject a Promise based on response status.
@@ -22789,12 +22759,12 @@
 
 
 /***/ },
-/* 193 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var enhanceError = __webpack_require__(194);
+	var enhanceError = __webpack_require__(192);
 
 	/**
 	 * Create an Error with the specified message, config, error code, and response.
@@ -22812,7 +22782,7 @@
 
 
 /***/ },
-/* 194 */
+/* 192 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22837,12 +22807,12 @@
 
 
 /***/ },
-/* 195 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(183);
+	var utils = __webpack_require__(181);
 
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -22911,12 +22881,12 @@
 
 
 /***/ },
-/* 196 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(183);
+	var utils = __webpack_require__(181);
 
 	/**
 	 * Parse headers into an object
@@ -22954,12 +22924,12 @@
 
 
 /***/ },
-/* 197 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(183);
+	var utils = __webpack_require__(181);
 
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -23028,7 +22998,7 @@
 
 
 /***/ },
-/* 198 */
+/* 196 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23070,12 +23040,12 @@
 
 
 /***/ },
-/* 199 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(183);
+	var utils = __webpack_require__(181);
 
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -23129,7 +23099,7 @@
 
 
 /***/ },
-/* 200 */
+/* 198 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23149,7 +23119,7 @@
 
 
 /***/ },
-/* 201 */
+/* 199 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23167,7 +23137,7 @@
 
 
 /***/ },
-/* 202 */
+/* 200 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23198,6 +23168,76 @@
 	  };
 	};
 
+
+/***/ },
+/* 201 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var styles = __webpack_require__(202);
+
+	var Saved = React.createClass({
+		displayName: 'Saved',
+
+
+		// Here we render the function
+		render: function render() {
+
+			return React.createElement(
+				'div',
+				{ className: 'panel panel-default', style: styles.panel },
+				React.createElement(
+					'div',
+					{ className: 'panel-heading', style: styles.panelHeading },
+					React.createElement(
+						'h4',
+						{ className: 'panel-title' },
+						'Saved'
+					)
+				),
+				React.createElement(
+					'div',
+					{ className: 'panel-body' },
+					this.props.saved.map(function (article, i) {
+						return React.createElement(
+							'p',
+							{ key: i },
+							React.createElement(
+								'a',
+								{ href: article.web_url },
+								article.snippet
+							)
+						);
+					})
+				)
+			);
+		}
+	});
+
+	// Export the componen back for use in other files
+	module.exports = Saved;
+
+/***/ },
+/* 202 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var Styles = {
+	    panel: {
+	        color: '#161e27',
+	        fontWeight: 100
+	    },
+	    panelHeading: {
+	        backgroundColor: '#161e27',
+	        color: '#ecf0f1'
+	    }
+	};
+
+	module.exports = Styles;
 
 /***/ }
 /******/ ]);

@@ -14,6 +14,11 @@ var Saved = React.createClass({
 					<h4 className="panel-title">Saved</h4>
 				</div>
 				<div className="panel-body">
+					{this.props.saved.map(function(article, i)
+						{
+							return <p key={i}><a href={article.web_url}>{article.snippet}</a></p> 
+						}
+					)}
 				</div>
 			</div>
 		)

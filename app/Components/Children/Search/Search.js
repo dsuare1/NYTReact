@@ -37,8 +37,6 @@ var Search = React.createClass({
 							</div>
 							<div className="panel-body">
 
-								
-
 								  <div className="form-group">
 								    <label htmlFor="search">Search Term:</label>
 								    <input type="text" name="search" value={this.state.value} className="form-control" id="searchTerm" style={styles.searchTerm} onChange={this.handleChange}/>
@@ -63,10 +61,9 @@ var Search = React.createClass({
 	  								    <input type="text" name="endYear" className="form-control" id="endYear" />
 	  								  </div>*/}
 
-								  <button className="btn btn-default main-button" id="runSearch" onClick={this.handleClick}>Search</button>
-			  					  <button type="button" className="btn btn-default main-button" id="clearAll" style={styles.clearButton}><i className="fa fa-trash"></i> Clear Fields</button>
+									  <button className="btn btn-default main-button" onClick={this.handleClick}>Search</button>
+				  					  <button type="button" className="btn btn-default main-button" id="clearAll" style={styles.clearButton}><i className="fa fa-trash"></i> Clear Fields</button>
 
-						
 							</div>
 						</div>
 			

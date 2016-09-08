@@ -14,6 +14,7 @@ var Main = React.createClass({
 		return {
 			searchTerm: "",
 			results: "",
+			saved: []
 		}
 	},
 
@@ -38,6 +39,15 @@ var Main = React.createClass({
 					})
 				}.bind(this))
 		}
+	},
+
+	componentDidMount: function() {
+		helpers.getSaved()
+			.then(function(response) {
+				this.setState({
+					history: response
+				})
+			})
 	},
 
 	render: function(){
@@ -72,7 +82,7 @@ var Main = React.createClass({
 						</div>
 						<div className="row">
 							<div className="col-md-8 col-md-offset-2">
-								<Saved />
+								<Saved saved={this.state.saved}/>
 							</div>
 						</div>
 					</div>

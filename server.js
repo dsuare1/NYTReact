@@ -36,30 +36,28 @@ app.get('/', function(req, res){
   res.sendFile('./public/index.html');
 })
 
-// app.get('/api/saved', function(req, res) {
+app.get('/api/saved', function(req, res) {
+  Article.find({}).sort([['date', 'descending']])
+    .exec(function(err, docs){
 
-//   History.find({}).sort([['date', 'descending']]).limit(5)
-//     .exec(function(err, doc){
+      if(err){
+        console.log(err);
+      }
+      else {
+        res.send(docs);
+        console.log(docs);
+      }
+    })
+});
 
-//       if(err){
-//         console.log(err);
-//       }
-//       else {
-//         res.send(doc);
-//       }
-//     })
-// });
-
-app.post('/api/saved', function(req, res){
-  var newSearch = new History(req.body);
-  console.log("BODY: " + req.body.location);
-
-  History.create({"location": req.body.location, "date": Date.now()}, function(err){
+app.post('/api/save', function(req, res){
+  Article.create({"title": req.body.title, "url": req.body.url, "date": Date.now()}, function(err){
     if(err){
       console.log(err);
     }
     else {
-      res.send("Saved Search");
+      console.log("Article Saved to DB");
+      res.send('article saved');
     }
   })
 });
